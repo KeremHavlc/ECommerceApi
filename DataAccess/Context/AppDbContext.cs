@@ -1,13 +1,11 @@
 ﻿using Entity.Concrete;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DataAccess.Context
 {
     public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
@@ -28,8 +26,8 @@ namespace DataAccess.Context
                 entity.Property(u => u.Surname).IsRequired().HasMaxLength(50);
                 entity.Property(u => u.Email).IsRequired().HasMaxLength(100);
                 entity.HasIndex(u => u.Email).IsUnique();
-                entity.HasOne(u => u.role)
-                      .WithMany()
+                entity.HasOne(u => u.Role)
+                      .WithMany(r => r.Users)
                       .HasForeignKey(u => u.RoleId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
@@ -50,7 +48,7 @@ namespace DataAccess.Context
                 entity.HasOne(a => a.User)
                       .WithMany(u => u.Addresses)
                       .HasForeignKey(a => a.UserId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.NoAction);
             });
 
             // Order
@@ -61,7 +59,7 @@ namespace DataAccess.Context
                 entity.HasOne(o => o.User)
                       .WithMany(u => u.Orders)
                       .HasForeignKey(o => o.UserId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.Restrict);
                 entity.HasOne(o => o.Address)
                       .WithMany()
                       .HasForeignKey(o => o.AddressId)

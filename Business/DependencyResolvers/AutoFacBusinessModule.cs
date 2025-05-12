@@ -1,0 +1,29 @@
+﻿using Autofac;
+using Business.Abstract;
+using Business.Concrete;
+using DataAccess.Abstract;
+using DataAccess.Concrete;
+using DataAccess.Context;
+
+namespace Business.DependencyResolvers
+{
+    public class AutoFacBusinessModule : Autofac.Module
+    {
+        protected override void Load(Autofac.ContainerBuilder builder)
+        {
+
+            builder.RegisterType<EfUserDal>().As<IUserDal>();
+            builder.RegisterType<EfRoleDal>().As<IRoleDal>();
+            builder.RegisterType<EfCartItemDal>().As<ICartItemDal>();
+            builder.RegisterType<EfProductDal>().As<IProductDal>();
+            builder.RegisterType<EfCategoryDal>().As<ICategoryDal>();
+            builder.RegisterType<EfOrderDal>().As<IOrderDal>();
+            builder.RegisterType<EfOrderItemDal>().As<IOrderItemDal>();
+            builder.RegisterType<EfAddressDal>().As<IAddressDal>();
+
+            builder.RegisterType<UserManager>().As<IUserService>();
+
+
+        }
+    }
+}
