@@ -3,6 +3,8 @@ using Autofac;
 using DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Business.DependencyResolvers;
+using Business.Mapping;
+using WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,10 @@ builder.Services.AddSwaggerGen();
 //Add Db Context
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//Add AutoMapper
+builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
+// Add FluentValidation
+builder.Services.AddCustomValidation();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
