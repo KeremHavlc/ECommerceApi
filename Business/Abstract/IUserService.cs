@@ -1,5 +1,6 @@
 ﻿using Core.Dtos;
 using Core.Utilities.Results;
+using Entity.Concrete;
 
 namespace Business.Abstract
 {
@@ -10,6 +11,6 @@ namespace Business.Abstract
         Result Update(UserDto userDto , Guid userId);
         DataResult<UserDto> GetById(Guid userId);
         DataResult<List<UserDto>> GetAll();
-        DataResult<UserDto> GetByEmail(string email);
+        DataResult<User> GetByEmail(string email);
     }
 }

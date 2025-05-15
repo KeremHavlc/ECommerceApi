@@ -9,6 +9,9 @@ namespace Business.Mapping
         public MappingProfile()
         {
             CreateMap<User , UserDto>().ReverseMap();
+            CreateMap<RegisterDto,User>();
+            CreateMap<LoginDto, User>();
+
         }
     }
 }

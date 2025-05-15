@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Business.Abstract;
 using Business.Concrete;
+using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
 using DataAccess.Context;
@@ -21,7 +22,10 @@ namespace Business.DependencyResolvers
             builder.RegisterType<EfOrderItemDal>().As<IOrderItemDal>();
             builder.RegisterType<EfAddressDal>().As<IAddressDal>();
 
+            builder.RegisterType<TokenHandler>().As<ITokenHandler>();
+
             builder.RegisterType<UserManager>().As<IUserService>();
+            builder.RegisterType<AuthManager>().As<IAuthService>();
 
 
         }

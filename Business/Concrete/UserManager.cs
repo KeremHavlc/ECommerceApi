@@ -60,15 +60,14 @@ namespace Business.Concrete
             return new SuccessDataResult<List<UserDto>>(_mapper.Map<List<UserDto>>(listUser), "Users listed successfully!");
         }
 
-        public DataResult<UserDto> GetByEmail(string email)
+        public DataResult<User> GetByEmail(string email)
         {
             var user = _userDal.Get(x => x.Email == email);
             if (user == null)
             {
-                return new ErrorDataResult<UserDto>("User not Found!");
+                return new ErrorDataResult<User>("User not Found!");
             }
-            var userDto = _mapper.Map<UserDto>(user);
-            return new SuccessDataResult<UserDto>(userDto, "User found successfully!");
+            return new SuccessDataResult<User>(user, "User found successfully!");
         }
 
         public DataResult<UserDto> GetById(Guid userId)
