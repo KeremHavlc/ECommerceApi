@@ -3,10 +3,11 @@ using FluentValidation;
 
 namespace Core.Validator
 {
-    public class UserValidator : AbstractValidator<UserDto>
+    public class UserValidator : AbstractValidator<UserDto>     
     {
         public UserValidator()
         {
+
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("Email Boş Olamaz!")
                 .EmailAddress().WithMessage("Geçersiz Email Adresi!");
