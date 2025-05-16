@@ -11,6 +11,7 @@ namespace Business.Mapping
             CreateMap<User , UserDto>().ReverseMap();
             CreateMap<RegisterDto,User>();
             CreateMap<LoginDto, User>();
+            CreateMap<CategoryDto, Category>();
 
         }
     }
