@@ -27,6 +27,7 @@ namespace Business.DependencyResolvers
             builder.RegisterType<UserManager>().As<IUserService>();
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<CategoryManager>().As<ICategoryService>();
+            builder.RegisterType<ProductManager>().As<IProductService>();
 
 
         }

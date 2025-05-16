@@ -76,7 +76,7 @@ namespace Business.Concrete
             {
                 return new ErrorResult("Category not found!");
             }
-            var existingCategory = _categoryDal.Get(c => c.Name == categoryDto.Name);
+            var existingCategory = _categoryDal.Get(c => c.Name == categoryDto.Name && c.Id != categoryId);
             if(existingCategory != null)
             {
                 return new ErrorResult("Category name already used!");

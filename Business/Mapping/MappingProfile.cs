@@ -12,7 +12,8 @@ namespace Business.Mapping
             CreateMap<RegisterDto,User>();
             CreateMap<LoginDto, User>();
             CreateMap<CategoryDto, Category>();
-
+            CreateMap<Product, ProductDto>();
+            CreateMap<ProductDto, Product>();
         }
     }
 }

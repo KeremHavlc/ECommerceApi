@@ -21,7 +21,7 @@ namespace WebApi.Controllers
                ? Ok(result)
                : BadRequest(result);
         }
-        [HttpDelete("delete{categoryId}")]
+        [HttpDelete("delete/{categoryId}")]
         public IActionResult DeleteCategory(Guid categoryId)
         {
             var result = _categoryService.Delete(categoryId);
@@ -29,7 +29,7 @@ namespace WebApi.Controllers
                 ? Ok(result)
                 : BadRequest(result);
         }
-        [HttpPut("update{categoryId}")]
+        [HttpPut("update/{categoryId}")]
         public IActionResult UpdateCategory(CategoryDto categoryDto , Guid categoryId)
         {
             var result = _categoryService.Update(categoryDto, categoryId);
@@ -45,7 +45,7 @@ namespace WebApi.Controllers
                 ? Ok(result)
                 : BadRequest(result);
         }
-        [HttpGet("getById{categoryId}")]
+        [HttpGet("getById/{categoryId}")]
         public IActionResult GetByCategoryId(Guid categoryId)
         {
             var result = _categoryService.GetById(categoryId);
@@ -53,7 +53,7 @@ namespace WebApi.Controllers
                 ? Ok(result)
                 : BadRequest(result);
         }
-        [HttpGet("getByName{categoryName}")]
+        [HttpGet("getByName/{categoryName}")]
         public IActionResult GetByCategoryName(string categoryName)
         {
             var result = _categoryService.GetByName(categoryName);
