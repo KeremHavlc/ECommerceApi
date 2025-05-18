@@ -16,6 +16,8 @@ namespace Business.Mapping
             CreateMap<ProductDto, Product>();
             CreateMap<CartItemDto, CartItem>();
             CreateMap<CartItem, CartItemDto>();
+            CreateMap<Address, AddressDto>();
+            CreateMap<AddressDto, Address>();
         }
     }
 }
