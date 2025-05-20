@@ -47,7 +47,7 @@ namespace Business.Concrete
                     Status = "pending",
                     AddressId = orderDto.AddressId,
                 };
-                _orderDal.Add(newOrder);
+                _orderDal.Add(newOrder);              
                 return new SuccessResult("Order added successfully!");
             }
             catch (Exception)

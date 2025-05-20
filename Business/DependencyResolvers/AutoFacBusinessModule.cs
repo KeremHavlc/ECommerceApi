@@ -31,8 +31,7 @@ namespace Business.DependencyResolvers
             builder.RegisterType<CartItemManager>().As<ICartItemService>();
             builder.RegisterType<AddressManager>().As<IAddressService>();
             builder.RegisterType<OrderManager>().As<IOrderService>();
-
-
+            builder.RegisterType<OrderItemManager>().As<IOrderItemService>();
         }
     }
 }
