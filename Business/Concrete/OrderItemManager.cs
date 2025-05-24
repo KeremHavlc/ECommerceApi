@@ -19,11 +19,11 @@ namespace Business.Concrete
             _cartItemDal = cartItemDal;
             _productDal = productDal;
         }
-        public Result Add(OrderItemDto orderItemDto)
+        public Result Add(Guid orderId)
         {
             try
             {
-                var order = _orderDal.Get(o => o.Id == orderItemDto.OrderId);
+                var order = _orderDal.Get(o => o.Id == orderId);
                 if(order == null)
                 {
                     return new ErrorResult("Order not found!");
@@ -38,7 +38,7 @@ namespace Business.Concrete
                     }
                     var newOrderItem = new OrderItem
                     {
-                        OrderId = orderItemDto.OrderId,
+                        OrderId = orderId,
                         ProductId = product.Id,
                         Quantity = cartItems.Quantity,
                         UnitPrice = product.Price
@@ -55,6 +55,38 @@ namespace Business.Concrete
             {
                 return new ErrorResult("Something went wrong!");
             }
-        }     
+        }
+
+        public DataResult<List<OrderItemDto>> GetAllOrderItem(Guid userId)
+        {
+            try
+            {
+                var order = _orderDal.Get(o => o.UserId == userId);
+                if (order == null)
+                {
+                    return new ErrorDataResult<List<OrderItemDto>>("Order not found!");
+                }
+
+                var orderItems = _orderItemDal.GetAll(p => p.OrderId == order.Id);
+                if (orderItems == null || !orderItems.Any())
+                {
+                    return new ErrorDataResult<List<OrderItemDto>>("Order Item not found!");
+                }
+
+                var orderItemDtos = orderItems.Select(item => new OrderItemDto
+                {
+                    OrderId = item.OrderId,
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    UnitPrice = item.UnitPrice
+                }).ToList();
+
+                return new SuccessDataResult<List<OrderItemDto>>(orderItemDtos, "OrderItem listed successfully!");
+            }
+            catch (Exception)
+            {
+                return new ErrorDataResult<List<OrderItemDto>>("Something went wrong!");
+            }
+        }
     }
 }

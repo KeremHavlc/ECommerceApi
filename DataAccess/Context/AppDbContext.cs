@@ -111,6 +111,18 @@ namespace DataAccess.Context
                       .HasForeignKey(ci => ci.ProductId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
+            //Comment
+            modelBuilder.Entity<Comment>(entity =>
+            {
+                entity.HasOne(c => c.User)
+                .WithMany(u => u.Comments)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(c => c.Product)
+                .WithMany(p => p.Comments)
+                .HasForeignKey(c => c.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+            });
         }
     }
 }

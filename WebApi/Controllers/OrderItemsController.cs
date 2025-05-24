@@ -14,10 +14,16 @@ namespace WebApi.Controllers
             _orderItemService = orderItemService;
         }
         [HttpPost("add")]
-        public IActionResult AddOrderItem(OrderItemDto orderItemDto)
+        public IActionResult AddOrderItem(Guid orderId)
         {
-            var result = _orderItemService.Add(orderItemDto);
+            var result = _orderItemService.Add(orderId);
             return result.Success ? Ok(result.Message) : BadRequest(result.Message);
-        }   
+        }
+        [HttpGet("getAllOrderItemsByUser/{userId}")]
+        public IActionResult GetAllOrderItem(Guid userId)
+        {
+            var result = _orderItemService.GetAllOrderItem(userId);
+            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+        }
     }
 }
