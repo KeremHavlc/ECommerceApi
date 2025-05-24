@@ -21,6 +21,7 @@ namespace Business.DependencyResolvers
             builder.RegisterType<EfOrderDal>().As<IOrderDal>();
             builder.RegisterType<EfOrderItemDal>().As<IOrderItemDal>();
             builder.RegisterType<EfAddressDal>().As<IAddressDal>();
+            builder.RegisterType<EfCommentDal>().As<ICommentDal>();
 
             builder.RegisterType<TokenHandler>().As<ITokenHandler>();
 
@@ -32,6 +33,7 @@ namespace Business.DependencyResolvers
             builder.RegisterType<AddressManager>().As<IAddressService>();
             builder.RegisterType<OrderManager>().As<IOrderService>();
             builder.RegisterType<OrderItemManager>().As<IOrderItemService>();
+            builder.RegisterType<CommentManager>().As<ICommentService>();
         }
     }
 }

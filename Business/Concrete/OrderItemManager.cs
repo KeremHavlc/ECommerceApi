@@ -57,11 +57,11 @@ namespace Business.Concrete
             }
         }
 
-        public DataResult<List<OrderItemDto>> GetAllOrderItem(Guid userId)
+        public DataResult<List<OrderItemDto>> GetAllOrderItem(Guid userId,Guid orderId)
         {
             try
             {
-                var order = _orderDal.Get(o => o.UserId == userId);
+                var order = _orderDal.Get(o => o.UserId == userId && o.Id ==orderId);
                 if (order == null)
                 {
                     return new ErrorDataResult<List<OrderItemDto>>("Order not found!");

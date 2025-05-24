@@ -19,10 +19,10 @@ namespace WebApi.Controllers
             var result = _orderItemService.Add(orderId);
             return result.Success ? Ok(result.Message) : BadRequest(result.Message);
         }
-        [HttpGet("getAllOrderItemsByUser/{userId}")]
-        public IActionResult GetAllOrderItem(Guid userId)
+        [HttpGet("getAllOrderItemsByUser/{userId}/{orderId}")]
+        public IActionResult GetAllOrderItem(Guid userId,Guid orderId)
         {
-            var result = _orderItemService.GetAllOrderItem(userId);
+            var result = _orderItemService.GetAllOrderItem(userId,orderId);
             return result.Success ? Ok(result.Data) : BadRequest(result.Message);
         }
     }

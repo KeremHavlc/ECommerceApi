@@ -7,6 +7,6 @@ namespace Business.Abstract
     public interface IOrderItemService
     {
         Result Add(Guid orderId);
-        DataResult<List<OrderItemDto>> GetAllOrderItem(Guid userId);
+        DataResult<List<OrderItemDto>> GetAllOrderItem(Guid userId,Guid orderId);
     }
 }

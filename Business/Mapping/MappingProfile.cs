@@ -20,6 +20,8 @@ namespace Business.Mapping
             CreateMap<AddressDto, Address>();
             CreateMap<OrderDto, Order>();
             CreateMap<Order, OrderDto>();
+            CreateMap<Comment, CommentDto>();
+            CreateMap<CommentDto, Comment>();
         }
     }
 }
