@@ -6,7 +6,7 @@ namespace Business.Abstract
 {
     public interface IProductService
     {
-        Result Add(ProductDto productDto);
+        Task<Result> Add(ProductDto productDto);
         Result Delete(Guid productId);
         Result Update(ProductDto productDto, Guid productId);
         DataResult<List<ProductDto>> GetAll();

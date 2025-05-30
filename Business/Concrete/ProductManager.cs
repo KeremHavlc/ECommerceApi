@@ -18,15 +18,15 @@ namespace Business.Concrete
             _mapper = mapper;
             _categoryDal = categoryDal;
         }
-        public Result Add(ProductDto productDto)
+        public async Task<Result> Add(ProductDto productDto)
         {
             var existingProduct = _productDal.Get(p => p.Name == productDto.Name);
-            if(existingProduct != null)
-            {
+            if (existingProduct != null)
                 return new ErrorResult("Product already available!");
-            }
-            var newProduct = _mapper.Map<Product>(productDto);
-            _productDal.Add(newProduct);
+
+            var product = _mapper.Map<Product>(productDto);
+            _productDal.Add(product);
+
             return new SuccessResult("Product added successfully!");
         }
 
@@ -44,14 +44,22 @@ namespace Business.Concrete
         public DataResult<List<ProductDto>> GetAll()
         {
             var products = _productDal.GetAll();
-            if(products == null)
+            if (products == null)
             {
                 return new ErrorDataResult<List<ProductDto>>("Product not found!");
             }
             var productDtos = _mapper.Map<List<ProductDto>>(products);
-            return new SuccessDataResult<List<ProductDto>>(productDtos, "Product listed successfully!");            
-        }
 
+           
+            foreach (var product in productDtos)
+            {       
+                if (!string.IsNullOrEmpty(product.Image))
+                {
+                    product.Image = "https://localhost:7042/images/" + product.Image;
+                }
+            }
+            return new SuccessDataResult<List<ProductDto>>(productDtos, "Product listed successfully!");
+        }
         public DataResult<List<ProductDto>> GetByCategoryId(Guid categoryId)
         {
             var category = _categoryDal.Get(c => c.Id == categoryId);

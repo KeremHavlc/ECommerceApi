@@ -2,6 +2,7 @@
 using Core.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Models;
 
 namespace WebApi.Controllers
 {
@@ -15,11 +16,39 @@ namespace WebApi.Controllers
             _productService = productService;
         }
         [HttpPost("add")]
-        public IActionResult Add(ProductDto productDto)
+        public async Task<IActionResult> Add(ProductCreateModel model)
         {
-            var result = _productService.Add(productDto);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            string imageFileName = null;
+            if (model.Image != null)
+            {
+                var uploadPath = @"C:\Users\Kerem\Desktop\Images";
+                if (!Directory.Exists(uploadPath))
+                    Directory.CreateDirectory(uploadPath);
+
+                imageFileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Image.FileName);
+                var filePath = Path.Combine(uploadPath, imageFileName);
+
+                using var stream = new FileStream(filePath, FileMode.Create);
+                await model.Image.CopyToAsync(stream);
+            }
+
+            var productDto = new ProductDto
+            {
+                Name = model.Name,
+                Description = model.Description,
+                Price = model.Price,
+                Stock = model.Stock,
+                Image = imageFileName,
+                CategoryId = model.CategoryId
+            };
+
+            var result = await _productService.Add(productDto);
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            return Ok(result.Message);
         }
+
         [HttpDelete("delete/{productId}")]
         public IActionResult Delete(Guid productId)
         {
