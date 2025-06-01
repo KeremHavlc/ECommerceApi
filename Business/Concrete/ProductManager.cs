@@ -73,6 +73,13 @@ namespace Business.Concrete
                 return new ErrorDataResult<List<ProductDto>>("No product found on this categoryId!");
             }
             var productDtos = _mapper.Map<List<ProductDto>>(products);
+            foreach (var product in productDtos)
+            {
+                if (!string.IsNullOrEmpty(product.Image))
+                {
+                    product.Image = "https://localhost:7042/images/" + product.Image;
+                }
+            }
             return new SuccessDataResult<List<ProductDto>>(productDtos, "Product found successfully in this CategoryId!");
         }
 
@@ -89,6 +96,13 @@ namespace Business.Concrete
                 return new ErrorDataResult<List<ProductDto>>("No product found on this categoryName!");
             }
             var productDtos = _mapper.Map<List<ProductDto>>(products);
+            foreach (var product in productDtos)
+            {
+                if (!string.IsNullOrEmpty(product.Image))
+                {
+                    product.Image = "https://localhost:7042/images/" + product.Image;
+                }
+            }
 
             return new SuccessDataResult<List<ProductDto>>(productDtos, "Product found successfully in this CategoryName!");
         }
@@ -101,6 +115,10 @@ namespace Business.Concrete
                 return new ErrorDataResult<ProductDto>("Product not found!");
             }
             var productDtos = _mapper.Map<ProductDto>(product);
+            if (!string.IsNullOrEmpty(productDtos.Image))
+            {
+                productDtos.Image = "https://localhost:7042/images/" + productDtos.Image;
+            }
 
             return new SuccessDataResult<ProductDto>(productDtos, "Product found successfully!");
         }
