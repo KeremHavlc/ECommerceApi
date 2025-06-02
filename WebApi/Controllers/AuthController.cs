@@ -38,9 +38,23 @@ namespace WebApi.Controllers
             var result = _authService.Register(registerDto);
             if (!result.Success)
             {
-                return BadRequest(result.Message);
+                return BadRequest(result);
             }
-            return Ok(result.Message);
+            return Ok(result);
+        }
+        [HttpPost("logout")]
+        public IActionResult LogOut()
+        {
+            if (Request.Cookies["authToken"]!= null)
+            {
+                Response.Cookies.Append("authToken", "", new CookieOptions
+                {
+                    HttpOnly = false,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                });
+            }
+            return Ok("Logged out successfully.");
         }
     }
 }

@@ -44,52 +44,52 @@ namespace WebApi.Controllers
 
             var result = await _productService.Add(productDto);
             if (!result.Success)
-                return BadRequest(result.Message);
+                return BadRequest(result);
 
-            return Ok(result.Message);
+            return Ok(result);
         }
 
         [HttpDelete("delete/{productId}")]
         public IActionResult Delete(Guid productId)
         {
             var result = _productService.Delete(productId);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
         [HttpPut("update/{productId}")]
         public IActionResult Update(ProductDto productDto, Guid productId)
         {
             var result = _productService.Update(productDto, productId);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
             var result = _productService.GetAll();
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
         [HttpGet("getbyid/{productId}")]
         public IActionResult GetById(Guid productId)
         {
             var result = _productService.GetById(productId);
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
         [HttpGet("getbyname/{productName}")]
         public IActionResult GetByName(string productName)
         {
             var result = _productService.GetByName(productName);
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
         [HttpGet("getbycategoryname/{categoryName}")]
         public IActionResult GetByCategoryName(string categoryName)
         {
             var result = _productService.GetByCategoryName(categoryName);
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
         [HttpGet("getbycategoryid/{categoryId}")]
         public IActionResult GetByCategoryId(Guid categoryId)
         {
             var result = _productService.GetByCategoryId(categoryId);
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return result.Success ? Ok(result) : BadRequest(result);
 
         }
     }

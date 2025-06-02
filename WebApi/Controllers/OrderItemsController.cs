@@ -17,13 +17,13 @@ namespace WebApi.Controllers
         public IActionResult AddOrderItem(Guid orderId)
         {
             var result = _orderItemService.Add(orderId);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
         [HttpGet("getAllOrderItemsByUser/{userId}/{orderId}")]
         public IActionResult GetAllOrderItem(Guid userId,Guid orderId)
         {
             var result = _orderItemService.GetAllOrderItem(userId,orderId);
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Business.Concrete
         {
             Guid defaultRoleId = RoleGuid.User;
             Guid assignedRoleId = registerDto.RoleId ?? defaultRoleId;
-            
+
             var userDto = new UserDto
             {
                 Name = registerDto.Name,
@@ -52,13 +52,15 @@ namespace Business.Concrete
             try
             {
                 var result = _userService.Add(userDto);
+                if (!result.Success)
+                    return new ErrorResult(result.Message);
+
                 return new SuccessResult("User registered successfully!");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new ErrorResult("User registration failed!");
+                return new ErrorResult($"User registration failed! Details: {ex.Message}");
             }
-
         }
     }
 }
