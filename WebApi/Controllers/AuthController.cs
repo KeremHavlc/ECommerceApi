@@ -23,14 +23,12 @@ namespace WebApi.Controllers
                 return BadRequest(result);
             }
 
-            Response.Cookies.Append("authToken", result.Data.AccessToken, new CookieOptions
+            return Ok(new
             {
-                HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.None,
-                Expires = DateTimeOffset.UtcNow.AddDays(7)
+                Success = result.Success,
+                Message = result.Message,
+                AccessToken = result.Data.AccessToken
             });
-            return Ok(result);
         }
         [HttpPost("register")]
         public IActionResult Register(RegisterDto registerDto)
@@ -45,16 +43,7 @@ namespace WebApi.Controllers
         [HttpPost("logout")]
         public IActionResult LogOut()
         {
-            if (Request.Cookies["authToken"]!= null)
-            {
-                Response.Cookies.Append("authToken", "", new CookieOptions
-                {
-                    HttpOnly = false,
-                    Secure = true,
-                    SameSite = SameSiteMode.None,
-                });
-            }
-            return Ok("Logged out successfully.");
+            return Ok(new { Message = "Logged out successfully." });
         }
     }
 }

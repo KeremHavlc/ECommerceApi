@@ -81,7 +81,7 @@ namespace Business.Concrete
                 var orders = _orderDal.GetAll(o => o.UserId == userId);
                 if (orders == null || !orders.Any())
                 {
-                    return new ErrorDataResult<List<Order>>("Orders not found!");
+                    return new SuccessDataResult<List<Order>>(new List<Order>(), "Sipariş bulunamadı.");
                 }
 
                 return new SuccessDataResult<List<Order>>(orders, "Orders retrieved successfully!");

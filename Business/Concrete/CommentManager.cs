@@ -3,6 +3,7 @@ using Business.Abstract;
 using Core.Dtos;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete;
 using Entity.Concrete;
 using System.Reflection.Metadata.Ecma335;
 
@@ -15,28 +16,41 @@ namespace Business.Concrete
         private readonly IMapper _mapper;
         private readonly IProductDal _productDal;
         private readonly IUserDal _userDal;
-        public CommentManager(ICommentDal commentDal, IOrderDal orderDal,IMapper mapper , IProductDal productdal,IUserDal userDal)
+        private readonly IOrderItemDal _orderItemDal;
+        public CommentManager(ICommentDal commentDal, IOrderDal orderDal,IMapper mapper , IProductDal productdal,IUserDal userDal, IOrderItemDal orderItemDal)
         {
             _commentDal = commentDal;
             _orderDal = orderDal;
             _mapper = mapper;
             _productDal = productdal;
             _userDal = userDal;
+            _orderItemDal = orderItemDal;
         }
 
         public Result Add(CommentDto commentDto)
         {
             try
             {
-                var order = _orderDal.Get(o => o.UserId == commentDto.UserId);
-                if(order == null)
+                var completedOrders = _orderDal.GetAll(o =>
+                    o.UserId == commentDto.UserId &&
+                    o.Status == "completed");
+
+                if (completedOrders == null || !completedOrders.Any())
                 {
-                    return new ErrorResult("Order not found!");
+                    return new ErrorResult("You can only comment after completing the order.");
                 }
-                if (order.Status == "pending")
+
+                var completedOrderIds = completedOrders.Select(o => o.Id).ToList();
+
+                var orderItems = _orderItemDal.GetAll(oi =>
+                    completedOrderIds.Contains(oi.OrderId) &&
+                    oi.ProductId == commentDto.ProductId);
+
+                if (!orderItems.Any())
                 {
-                    return new ErrorResult("You cannot comment on a pending order!");
+                    return new ErrorResult("You must complete a purchase for this product before commenting.");
                 }
+
                 var newComment = _mapper.Map<Comment>(commentDto);
                 _commentDal.Add(newComment);
                 return new SuccessResult("Comment added successfully!");
@@ -46,6 +60,7 @@ namespace Business.Concrete
                 return new ErrorResult("Something went wrong!");
             }
         }
+
 
         public Result Delete(Guid commentId)
         {

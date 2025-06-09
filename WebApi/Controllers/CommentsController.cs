@@ -45,7 +45,7 @@ namespace WebApi.Controllers
                 ? Ok(result)
                 : BadRequest(result);
         }
-        [HttpGet("etAllCommentByUserId/{userId}")]
+        [HttpGet("getAllCommentByUserId/{userId}")]
         public IActionResult GetAllCommentByUserId(Guid userId)
         {
             var result = _commentService.GetAllCommentByUserId(userId);
