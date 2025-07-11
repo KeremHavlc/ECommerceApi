@@ -9,7 +9,7 @@ It includes essential features like user authentication, product management, and
 
 ##  Technologies Used
 
-- ASP.NET Core 8 Web API
+- ASP.NET Core 9 Web API
 - Entity Framework Core
 - Microsoft SQL Server
 - AutoMapper
